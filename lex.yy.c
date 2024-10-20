@@ -613,7 +613,7 @@ static const yy_state_type yy_NUL_trans[10] =
 
 static const flex_int16_t yy_rule_linenum[5] =
     {   0,
-        8,   11,   14,   17
+        9,   13,   17,   21
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -626,10 +626,11 @@ static const flex_int16_t yy_rule_linenum[5] =
 #line 1 "simple.l"
 #line 2 "simple.l"
 /* Definitions of any C code you want to include at the top */
-// this is my header
 #include <stdio.h>
-#line 632 "lex.yy.c"
+#include <stdlib.h>
+# define YY_DECL int yylex(yyscan_t yyscanner)
 #line 633 "lex.yy.c"
+#line 634 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -956,9 +957,9 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 7 "simple.l"
+#line 8 "simple.l"
 
-#line 962 "lex.yy.c"
+#line 963 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1013,39 +1014,43 @@ do_action:	/* This label is used only to access EOF actions. */
 /* %% [13.0] actions go here */
 case 1:
 YY_RULE_SETUP
-#line 8 "simple.l"
+#line 9 "simple.l"
 { 
-  // this is a number
-  printf("NUMBER: %s\n", yytext); }
+  // Recognize a number
+  printf("NUMBER: %s\n", yytext); 
+}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "simple.l"
+#line 13 "simple.l"
 { 
-  // this is a word
-  printf("WORD: %s\n", yytext); }
+  // Recognize a word
+  printf("WORD: %s\n", yytext); 
+}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 14 "simple.l"
+#line 17 "simple.l"
 { 
-  // this is a newline
-  printf("NEWLINE\n"); }
+  // Recognize a newline
+  printf("NEWLINE\n"); 
+}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "simple.l"
+#line 21 "simple.l"
 { 
-  // this is a character
-  printf("CHARACTER: %s\n", yytext); }
+  // Recognize any other single character
+  printf("CHARACTER: %s\n", yytext); 
+}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 21 "simple.l"
+#line 26 "simple.l"
 ECHO;
 	YY_BREAK
-#line 1049 "lex.yy.c"
+#line 1054 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -2341,20 +2346,31 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 /* %ok-for-header */
 
-#line 21 "simple.l"
+#line 26 "simple.l"
+
 
 /* C code for the main function */
-int main() {
-    // this is my main
-    printf("start of the main");
-    yylex();  // Call the lexer
-    printf("end of the main");
-    return 0;
+int main(void) {
+    yyscan_t scanner;
+
+    // Initialize the scanner
+    if (yylex_init(&scanner)) {
+        fprintf(stderr, "Error initializing scanner\n");
+        return EXIT_FAILURE;
+    }
+
+    // Start lexical analysis
+    printf("Start scanning:\n");
+    yylex(scanner);
+
+    // Cleanup and exit
+    yylex_destroy(scanner);
+    return EXIT_SUCCESS;
 }
 
-int yywrap() {
-    printf("start of yywrap");
-    // this is yywrap
+int yywrap(yyscan_t yyscanner) {
+    // Called when end of input is reached
     return 1; // Indicates end of file
 }
+
 
