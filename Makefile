@@ -6,7 +6,7 @@ LEX_OUTPUT = lex.yy.c
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall
+CFLAGS = -Wall -ggdb
 
 # Target for building the scanner
 all: scanner
