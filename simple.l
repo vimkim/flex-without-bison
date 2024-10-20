@@ -22,11 +22,14 @@
 /* C code for the main function */
 int main() {
     // this is my main
+    printf("start of the main");
     yylex();  // Call the lexer
+    printf("end of the main");
     return 0;
 }
 
 int yywrap() {
+    printf("start of yywrap");
     // this is yywrap
     return 1; // Indicates end of file
 }
